@@ -15,7 +15,7 @@
 
 set psf "complex_wb_neutralized.psf"
 set dcd "out_eq_npt_01.dcd"
-
+ 
 # Wrap
 set mol [mol new $psf type psf waitfor all]
 #set mol [mol new [lindex $argv 1] type psf waitfor all]
