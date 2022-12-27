@@ -1,0 +1,53 @@
+to generate a movie (in case ptn/ligand passed the pbc)
+
+1. upload psf and dcd
+2. change representations to new cartoon and licorice
+3. open tk console
+4. paste the following commnds:
+
+########################################################################################
+pbc wrap -compound fragment -center com -centersel "<enter your selection>: the chain(s) or molecule(s) you want to 
+keep at the center of the box" -sel "<enter your selection>: the chain(s) or molecule(s) you want to keep at the 
+center of the box + any other molecule(s) of interest" -all
+
+Note: Usually water molecules and ions are excluded from the "-centersel" because of their high rate of diffusion 
+(mobility). Also, "-sel" flag is optional, however if you have a large (say > 100000 atoms) system with many water 
+molecules and ions or other large miscellaneous molecules of lesser relevance, it would speed up the wrapping process.
+
+As mentioned earlier, it is very important to give sufficient padding with water molecules at the start of the 
+simulation; to account for the molecular fluctuations within the complex of interest during the simulation period.
+
+For further reading, you may refer to the PBCTools page:
+https://www.ks.uiuc.edu/Research/vmd/plugins/pbctools/ 
+######################################################################################
+pbc wrap -centersel "protein" -center com -compound fragment -sel "protein and resname LIG" -all
+#################################################################
+pbc wrap -centersel "all" -center com -compound residue -all 
+#################################################################
+
+pbc join connected -now
+pbc join residue -now
+pbc unwrap -sel "not waters" -all
+
+in some cases you may need to add: 
+
+pbc wrap -center com -centersel "not waters" -compound residue -all
+
+in some cases:
+
+# join all bonds of long polymer chain molecules
+pbc join fragment -bondlist
+
+5. extensions > analysis > RMSD visualizer tool
+6. select backbone, align
+7. display > reset view
+
+8. extensions > analysis > RMSD trajectory tool
+
+9. type segname B instead of protein
+10. click RMSD
+11. File > save data
+12. save as 'txt' file
+13. open it in gedit
+14. remove any words. replace NA with 0.000. remove the empty line at the end of the file.
+15. take screenshot of 'RMSD trajectory tool' window for RMSD average, sd, min, max.
