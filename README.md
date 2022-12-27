@@ -1,5 +1,5 @@
 # MD_NAMD
-Scripts for MD simulations using NAMD.
+Scripts for running and analyzing MD simulations using NAMD
 
 ## Hello there!
 This is a repository where you can find scripts for running and analyzing molecular dynamics (MD) simulations using NAMD engine, either locally or on Google Colab. It contains tcl scripts for setting up and analyzing NAMD simulations. It is expected to be continuously updated, so it is still under construction.
