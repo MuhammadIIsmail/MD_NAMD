@@ -20,7 +20,7 @@ simulation; to account for the molecular fluctuations within the complex of inte
 For further reading, you may refer to the PBCTools page:
 https://www.ks.uiuc.edu/Research/vmd/plugins/pbctools/ 
 ######################################################################################
-pbc wrap -centersel "protein" -center com -compound fragment -sel "protein and resname LIG" -all
+pbc wrap -centersel "protein" -center com -compound fragment -sel "protein or resname LIG" -all
 #################################################################
 pbc wrap -centersel "all" -center com -compound residue -all 
 #################################################################
