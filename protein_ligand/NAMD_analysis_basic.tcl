@@ -23,7 +23,7 @@ set mol [mol new $psf type psf waitfor all]
 mol addfile $dcd type dcd step 1 waitfor all 
 #mol addfile [lindex $argv 2] type dcd step 10 waitfor all 
 
-pbc wrap -centersel "protein" -center com -compound fragment -sel "protein and resname LIG" -all
+pbc wrap -centersel "protein" -center com -compound fragment -sel "protein or resname LIG" -all
 
 # RMSD_ptn
 
