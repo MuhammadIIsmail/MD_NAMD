@@ -25,6 +25,12 @@ mol addfile $dcd type dcd step 1 waitfor all
 
 pbc wrap -centersel "protein" -center com -compound fragment -sel "protein or resname LIG" -all
 
+pbc wrap -centersel "all" -center com -compound residue -all 
+
+pbc join connected -now
+pbc join residue -now
+pbc unwrap -sel "not waters" -all
+
 # RMSD_ptn
 
 set ref [atomselect $mol "name CA" frame 0]
