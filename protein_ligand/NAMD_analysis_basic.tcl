@@ -174,7 +174,7 @@ hbonds -sel1 [atomselect top protein] -sel2 [atomselect top "resname LIG"] -writ
 set fout [open "analysis/hbonds.csv" w]
 	puts $fout "frame, hbonds"
 
-set f [open "analysis/hbonds.dat"]
+set f [open "hbonds.dat"]
 while {[gets $f line] >= 0} {
     set new_line [regsub -all {\s+} $line {, } ]
     puts $fout "$new_line"
