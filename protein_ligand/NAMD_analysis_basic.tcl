@@ -182,3 +182,6 @@ while {[gets $f line] >= 0} {
 close $f
 
 close $fout
+
+# Save wrapped trajectory
+animate write dcd analysis/md_wrap_align.dcd top
