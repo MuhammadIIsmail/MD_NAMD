@@ -31,6 +31,9 @@ pbc join connected -now
 pbc join residue -now
 pbc unwrap -sel "not waters" -all
 
+# make folder for analysis
+file mkdir "analysis"
+
 # RMSD_ptn
 
 set ref [atomselect $mol "name CA" frame 0]
@@ -43,7 +46,7 @@ set nframes [molinfo top get numframes]
 proc myrmsd { frame } {
 	global ref sel all
 	$all move [measure fit $sel $ref]
-	set fout [open "rmsd_ptn.csv" a+]
+	set fout [open "analysis/rmsd_ptn.csv" a+]
 	puts "$frame: [measure rmsd $sel $ref]"
 	puts $fout [format "%d %s %f" $frame , [measure rmsd $sel $ref]]
 close $fout
@@ -51,7 +54,7 @@ close $fout
 
 
 
-set fout [open "rmsd_ptn.csv" w]
+set fout [open "analysis/rmsd_ptn.csv" w]
 	puts $fout "frame, rmsd"
 close $fout
 
@@ -70,13 +73,13 @@ set nframes [molinfo top get numframes]
 
 proc rmsd_lig { frame } {
 	global ref sel all
-	set fout [open "rmsd_lig.csv" a+]
+	set fout [open "analysis/rmsd_lig.csv" a+]
 	puts "$frame: [measure rmsd $sel $ref]"
 	puts $fout [format "%d %s %f" $frame , [measure rmsd $sel $ref]]
 close $fout
 }
 
-set fout [open "rmsd_lig.csv" w]
+set fout [open "analysis/rmsd_lig.csv" w]
 	puts $fout "frame, rmsd"
 close $fout
 
@@ -89,7 +92,7 @@ for {set i 0} {$i <$nframes} {incr i} {
 # RMSF
 set num [expr {$nframes - 1}]
 
-set fout [open "rmsf_ptn.csv" w]
+set fout [open "analysis/rmsf_ptn.csv" w]
 	puts $fout "residue, rmsf"
 
 set sel [atomselect top "name CA"]
@@ -144,7 +147,7 @@ proc gyr_radius {sel} {
   return [expr sqrt($sum / ([$sel num] + 0.0))]
 }
 
-set outfile [open "rg_ptn.csv" w]
+set outfile [open "analysis/rg_ptn.csv" w]
 puts $outfile "frame, rad_of_gyr"
 set nf [molinfo top get numframes] 
 set i 0
@@ -168,10 +171,10 @@ close $outfile
 package require hbonds
 hbonds -sel1 [atomselect top protein] -sel2 [atomselect top "resname LIG"] -writefile yes -plot no
 
-set fout [open hbonds.csv w]
+set fout [open "analysis/hbonds.csv" w]
 	puts $fout "frame, hbonds"
 
-set f [open "hbonds.dat"]
+set f [open "analysis/hbonds.dat"]
 while {[gets $f line] >= 0} {
     set new_line [regsub -all {\s+} $line {, } ]
     puts $fout "$new_line"
